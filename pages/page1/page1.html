@@ -1,0 +1,1001 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title></title>
+<link rel="stylesheet" href="../../index.css">
+<link rel="stylesheet" href="../../cjs/jquery.mCustomScrollbar.css" />
+<link href="../../fonts/font-awesome/css/all.css" rel="stylesheet">
+<script src="../../cjs/easeljs-0.8.2.min.js"></script> 
+<script src="../../cjs/tweenjs-0.6.2.min.js"></script> 
+<script src="../../cjs/preloadjs-0.6.2.min.js"></script> 
+<script src="../../cjs/soundjs-0.6.2.min.js"></script> 
+<script src="page.js"></script> 
+<script src="../../principal.js"></script> 
+<script src="../../cjs/jquery.min.js"></script> 
+<script src="../../cjs/jquery.imagemapster.js"></script> 
+<script src="../../cjs/jquery.mCustomScrollbar.concat.min.js"></script> 
+<script src="../../cjs/jquery-ui.min.js"></script> 
+<script src="../../cjs/jquery.ui.touch-punch.min.js"></script> 
+<script>
+	
+	
+var canvas, stage, exportRoot;
+function init() {
+	canvas = document.getElementById("canvas");
+	var loader = new createjs.LoadQueue(false);
+	loader.installPlugin(createjs.Sound);
+	loader.addEventListener("fileload", handleFileLoad);
+	loader.addEventListener("complete", handleComplete);
+	loader.addEventListener("progress", handleProgress);
+	loader.loadManifest(lib.properties.manifest);
+  $.getJSON("../../images/animaciones_atlas_.json", function(json) {
+      frames_animacion = json.frames;
+    });
+}
+function handleFileLoad(evt) {
+	if (evt.item.type == "image") { images[evt.item.id] = evt.result; }
+}
+function playSound(id, loop) {
+	createjs.Sound.play(id, createjs.Sound.INTERRUPT_EARLY, 0, 0, loop);
+}
+ancho_linea = 0;
+alto_linea = 10;
+max_ancho = 450;
+function handleProgress(evt) {
+	stage = new createjs.Stage(canvas);
+	var bordePadding = 2;
+    var borde = new createjs.Shape;
+    borde.graphics.beginFill("rgba(131,120,111,0.4)").drawRect(0, 0, max_ancho + bordePadding*2, alto_linea).endFill();
+    var linea_carga = new createjs.Shape();
+	linea_carga.graphics.beginFill("#009DDF").drawRect(0 + bordePadding,0 + bordePadding, ancho_linea, alto_linea - bordePadding*2).endFill();
+    progreso = Math.round(evt.loaded * max_ancho);
+	ancho_linea = progreso;
+	contenedor = new createjs.Container();
+	contenedor.x = 1240/2 - max_ancho/2;
+	contenedor.y = 495*4/5 - alto_linea/2;
+	contenedor.addChild(borde, linea_carga);
+	//stage.addChild(contenedor);
+	stage.update();
+}
+function handleComplete(evt) {
+	var queue = evt.target;
+	stage = new createjs.Stage(canvas);
+	createjs.Ticker.addEventListener("tick", stage);
+	/////Variables
+	sin_personaje = true;
+	globo_personaje = "Empecemos identificando la importancia del programa de bloqueo y etiquetado, las actividades en las que se debe aplicar y algunos conceptos asociados.";
+	pausas_audio = [[0,16406],[977,19347]];
+
+  coord_flecha_next = [900,100];
+
+  contenidos();	
+}
+</script>
+</head>
+<body onload="init();">
+<canvas id="canvas" width="1260" height="550"></canvas>
+<div id="instruccion_circulos" class="instruccion_circulos"> </div>
+<div class="c_principal c_1_1">
+  <h1 data-posabsbtn="170,320"> ¿Qué es la protección de datos?</h1>
+  <div class="item_c">
+    <div class="txt_c">
+      <div class="cont_audio">
+        <div class="audio_c">
+          <audio controls style="margin-top: 15px;">
+            <source src="sounds/diap4.mp3" type="audio/mpeg">
+            Your browser does not support the audio tag. </audio>
+        </div>
+        <div class="subs_audio">
+          <div class="resaltado_especial">La protección de datos se considera un derecho fundamental que tienen las personas para <span class="negrilla">conocer, actualizar y rectificar sus datos personales</span> que se encuentren en bases de datos o archivos, y que estén siendo objeto de tratamiento por parte de entidades públicas o privadas. </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="item_c"><img src="images/diap4.png" height="300"> </div>
+</div>
+<div class="c_principal c_1_1">
+  <h1 data-posabsbtn="170,320"> Ley Colombiana de Protección de Datos</h1>
+  <div class="item_c">
+    <div class="txt_c">
+      <div class="cont_audio">
+        <div class="audio_c">
+          <audio controls style="margin-top: 15px;">
+            <source src="sounds/diap6.mp3" type="audio/mpeg">
+            Your browser does not support the audio tag. </audio>
+        </div>
+        <div class="subs_audio"> La <span class="negrilla">Ley 1581 de 2012</span> de protección de datos personales dicta las disposiciones generales,
+          definiciones y términos principales, y establece los derechos de los titulares y los deberes que
+          tienen los responsables y encargados para una efectiva protección de los datos personales. </div>
+      </div>
+    </div>
+  </div>
+  <div class="item_c"><img src="images/diap6.png" height="300"> </div>
+</div>
+<div class="mas_personaje c_1">
+  <h1></h1>
+  <div class="item_c"></div>
+</div>
+<div class="c_principal c_1">
+  <h1 data-posabsbtn="170,320"> Conceptos clave</h1>
+  <div class="item_c">
+    <div class="instruccion_interna">Pasa el mouse sobre los textos resaltados</div>
+    <div class="txt_c">
+      <div class="cont_audio">
+        <div class="audio_c">
+          <audio controls style="margin-top: 15px;">
+            <source src="sounds/diap8a.mp3" type="audio/mpeg">
+            Your browser does not support the audio tag. </audio>
+        </div>
+        <div class="subs_audio"> En el tratamiento de los datos intervienen tres actores principales: </div>
+      </div>
+      <table style="text-align: center; margin: auto;">
+        <tr>
+          <td><img src="images/diap8a.png" height="170">
+            <div class="negrilla_sensible" id="zona_sensible0">Titular</div></td>
+          <td><img src="images/diap8b.png" height="170">
+            <div class="negrilla_sensible" id="zona_sensible1">Responsable</div></td>
+          <td><img src="images/diap8c.png" height="170">
+            <div class="negrilla_sensible" id="zona_sensible2">Encargado</div></td>
+        </tr>
+      </table>
+    </div>
+  </div>
+</div>
+<div class="c_principal c_2_6">
+  <h1 data-posabsbtn="700,220">Tipologías de datos personales</h1>
+  <div class="item_c">
+    <h1></h1>
+  </div>
+  <div class="item_c" style="margin: 0 30px;">
+    <div class="txt_interno c_1">
+      <h1>Inicio</h1>
+      <div class="item_c">
+        <div class="cont_audio">
+          <div class="audio_c">
+            <audio controls style="margin-top: 15px;">
+              <source src="sounds/diap10.mp3" type="audio/mpeg">
+              Your browser does not support the audio tag. </audio>
+          </div>
+          <div class="subs_audio">Los datos personales son toda la información que nos identifica o nos puede hacer identificables. Estos se clasifican en cuatro tipos, principalmente.</div>
+        </div>
+        <div class='instruccion_interna'><span class='indica_instclic'></span>Pulsa los botones para conocer cada uno de ellos.</div>
+      </div>
+    </div>
+    <div class="txt_interno c_1_1">
+      <h1>Datos públicos</h1>
+      <div class="item_c">
+        <div class="cont_audio">
+          <div class="audio_c">
+            <audio controls style="margin-top: 15px;">
+              <source src="sounds/diap11a.mp3" type="audio/mpeg">
+              Your browser does not support the audio tag. </audio>
+          </div>
+          <div class="subs_audio">
+            <div class="resaltado_especial">Los datos públicos son aquellos que conciernen a un interés general, incluyendo aquellos que estén en documentos públicos y sentencias judiciales que no estén sometidos a reserva. </div>
+          </div>
+        </div>
+        <div class="instruccion_interna">Pasa el mouse sobre el dato de interés</div>
+        <div id="zona_sensible3" class="negrilla_sensible">
+          <p><i class="fad fa-comment-exclamation"></i></p>
+          <p>Dato de interés</p>
+        </div>
+      </div>
+      <div class="item_c"> <img src="images/diap11.png" height="250"> </div>
+    </div>
+    <div class="txt_interno c_1_1">
+      <h1>Datos semiprivados</h1>
+      <div class="item_c">
+        <div class="cont_audio">
+          <div class="audio_c">
+            <audio controls style="margin-top: 15px;">
+              <source src="sounds/diap12a.mp3" type="audio/mpeg">
+              Your browser does not support the audio tag. </audio>
+          </div>
+          <div class="subs_audio">
+            <div class="resaltado_especial">Los datos semiprivados son aquellos que no tienen naturaleza íntima, reservada o pública, y cuyo conocimiento o divulgación puede interesar no sólo a su Titular sino a cierto sector, grupo de personas o a la sociedad en general. </div>
+          </div>
+        </div>
+        <div class="instruccion_interna">Pasa el mouse sobre el dato de interés</div>
+        <div id="zona_sensible4" class="negrilla_sensible">
+          <p><i class="fad fa-comment-exclamation"></i></p>
+          <p>Dato de interés</p>
+        </div>
+      </div>
+      <div class="item_c"> <img src="images/diap12.png" height="250"> </div>
+    </div>
+    <div class="txt_interno c_1_1">
+      <h1>Datos privados</h1>
+      <div class="item_c">
+        <div class="cont_audio">
+          <div class="audio_c">
+            <audio controls style="margin-top: 15px;">
+              <source src="sounds/diap13a.mp3" type="audio/mpeg">
+              Your browser does not support the audio tag. </audio>
+          </div>
+          <div class="subs_audio">
+            <div class="resaltado_especial">Un dato privado es aquel que por su naturaleza íntima o reservada sólo es
+              relevante para el Titular.</div>
+          </div>
+        </div>
+        <div class="instruccion_interna">Pasa el mouse sobre el dato de interés</div>
+        <div id="zona_sensible5" class="negrilla_sensible">
+          <p><i class="fad fa-comment-exclamation"></i></p>
+          <p>Dato de interés</p>
+        </div>
+      </div>
+      <div class="item_c"> <img src="images/diap13.png" height="250"> </div>
+    </div>
+    <div class="txt_interno c_1_1">
+      <h1>Datos sensibles</h1>
+      <div class="item_c">
+        <div class="cont_audio">
+          <div class="audio_c">
+            <audio controls style="margin-top: 15px;">
+              <source src="sounds/diap14a.mp3" type="audio/mpeg">
+              Your browser does not support the audio tag. </audio>
+          </div>
+          <div class="subs_audio">
+            <div class="resaltado_especial">Los datos sensibles se relacionan con la intimidad del titular y su uso indebido puede generar discriminación. También hacen parte de este conjunto los datos genéticos y aquellos relacionados con la salud.</div>
+          </div>
+        </div>
+        <div class="instruccion_interna">Pasa el mouse sobre el dato de interés</div>
+        <div id="zona_sensible6" class="negrilla_sensible">
+          <p><i class="fad fa-comment-exclamation"></i></p>
+          <p>Dato de interés</p>
+        </div>
+      </div>
+      <div class="item_c"> <img src="images/diap14.png" height="250"> </div>
+    </div>
+  </div>
+</div>
+<div class="c_principal c_1_1">
+  <h1 data-posabsbtn="170,320">Autorización para el Tratamiento de los Datos Personales</h1>
+  <div class="item_c">
+    <div class="txt_c">
+      <div class="cont_audio">
+        <div class="audio_c">
+          <audio controls style="margin-top: 15px;">
+            <source src="sounds/diap16a.mp3" type="audio/mpeg">
+            Your browser does not support the audio tag. </audio>
+        </div>
+        <div class="subs_audio">
+          <div class="resaltado_especial">La Autorización para el Tratamiento de Datos Personales es el consentimiento que da el Titular al Responsable o al Encargado para que se realice el tratamiento de sus datos. </div>
+          <div>Esta Autorización debe cumplir con los siguientes requisitos: </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="item_c">
+    <div class="instruccion_interna">Pasa el mouse sobre los íconos y textos resaltados</div>
+    <div class="infografia"> <img src="images/diap16.png" height="180">
+      <p></p>
+      <map data-restriccion="no">
+        <area id="zona_sensible7" shape="circle" coords="78,85,70">
+        <area id="zona_sensible8" shape="circle" coords="257,85,70">
+      </map>
+    </div>
+    <div id="zona_sensible9" class="negrilla_sensible">
+      <p><i class="fad fa-comment-exclamation"></i></p>
+      <p>Dato de interés</p>
+    </div>
+  </div>
+</div>
+<div class="mas_personaje c_1">
+  <h1></h1>
+  <div class="item_c"></div>
+</div>
+<div class="c_principal c_1_1">
+  <h1 data-posabsbtn="170,320">Derechos de los Titulares</h1>
+  <div class="item_c">
+    <div class="txt_c">
+      <div class="cont_audio">
+        <div class="audio_c">
+          <audio controls style="margin-top: 15px;">
+            <source src="sounds/diap18a.mp3" type="audio/mpeg">
+            Your browser does not support the audio tag. </audio>
+        </div>
+        <div class="subs_audio">Los derechos de los Titulares de los datos personales son: </div>
+      </div>
+    </div>
+  </div>
+  <div class="item_c">
+    <div class="txt_c">
+      <div class="infografia"> <img src="images/diap18.png" height="250">
+        <map data-restriccion="no">
+          <area id="zona_sensible10" shape="circle" coords="149,510,70">
+          <area id="zona_sensible11" shape="circle" coords="79,279,70">
+          <area id="zona_sensible12" shape="circle" coords="225,117,70">
+          <area id="zona_sensible13" shape="circle" coords="456,117,70">
+          <area id="zona_sensible14" shape="circle" coords="601,279,70">
+          <area id="zona_sensible15" shape="circle" coords="520,510,70">
+        </map>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="c_principal c_1">
+  <h1 data-posabsbtn="170,320">Deberes de los Responsables y Encargados de los Datos Personales</h1>
+  <div class="item_c">
+    <div class="txt_c">
+      <div class="cont_audio">
+        <div class="audio_c">
+          <audio controls style="margin-top: 15px;">
+            <source src="sounds/diap20a.mp3" type="audio/mpeg">
+            Your browser does not support the audio tag. </audio>
+        </div>
+        <div class="subs_audio">Como colaboradores del Banco debemos tener en cuenta los siguientes deberes de los Responsables y Encargados de los Datos Personales: </div>
+      </div>
+      <div class="infografia"> <img src="images/diap20.png" height="180">
+        <map data-restriccion="no">
+          <area id="zona_sensible16" shape="circle" coords="79,219,70">
+          <area id="zona_sensible17" shape="circle" coords="251,97,70">
+          <area id="zona_sensible18" shape="circle" coords="251,343,70">
+          <area id="zona_sensible19" shape="circle" coords="821,221,70">
+          <area id="zona_sensible20" shape="circle" coords="991,97,70">
+          <area id="zona_sensible21" shape="circle" coords="991,343,70">
+          <area id="zona_sensible22" shape="circle" coords="1179,221,70">
+        </map>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="c_principal c_1_2">
+  <h1 data-posabsbtn="170,320">Responsabilidades de los colaboradores del Banco</h1>
+  <div class="item_c">
+    <div class="txt_c">
+      <div class="cont_audio">
+        <div class="audio_c">
+          <audio controls style="margin-top: 15px;">
+            <source src="sounds/diap22a.mp3" type="audio/mpeg">
+            Your browser does not support the audio tag. </audio>
+        </div>
+        <div class="subs_audio">Como colaboradores del Banco Popular debemos cumplir con las siguientes responsabilidades, las cuales se encuentran descritas en nuestra Política de Protección de Datos: </div>
+      </div>
+    </div>
+  </div>
+  <div class="item_c">
+    <div class="instruccion_interna">Pasa el mouse sobre los íconos y textos resaltados</div>
+    <div class="txt_c">
+      <div class="infografia"> <img src="images/diap22.png" height="180">
+        <p></p>
+        <map data-restriccion="no">
+          <area id="zona_sensible23" shape="circle" coords="280,189,70">
+          <area id="zona_sensible24" shape="circle" coords="457,189,70">
+          <area id="zona_sensible25" shape="circle" coords="627,189,70">
+          <area id="zona_sensible26" shape="circle" coords="801,189,70">
+          <area id="zona_sensible27" shape="circle" coords="976,189,70">
+        </map>
+      </div>
+      <div id="zona_sensible28" class="negrilla_sensible">
+        <p><i class="fad fa-comment-exclamation"></i></p>
+        <p>Dato de interés</p>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="c_principal c_1">
+  <h1 data-posabsbtn="170,320">Sanciones</h1>
+  <div class="item_c">
+    <div class="txt_c">
+      <div class="cont_audio">
+        <div class="audio_c">
+          <audio controls style="margin-top: 15px;">
+            <source src="sounds/diap24a.mp3" type="audio/mpeg">
+            Your browser does not support the audio tag. </audio>
+        </div>
+        <div class="subs_audio">El artículo 23 de la <span class="negrilla">Ley 1581 de 2012</span> establece las siguientes sanciones por el incumplimiento a la normativa de datos personales:</div>
+      </div>
+      <div class="infografia"> <img src="images/diap24.png" height="180">
+        <map data-restriccion="no">
+          <area id="zona_sensible29" shape="circle" coords="91,98,70">
+          <area id="zona_sensible30" shape="circle" coords="91,341,70">
+          <area id="zona_sensible31" shape="circle" coords="570,98,70">
+          <area id="zona_sensible32" shape="circle" coords="570,341,70">
+        </map>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="c_masinfo c_2_6" style="width: 1130px;">
+  <h1>Ejemplos de sanciones</h1>
+  <div class="item_c">
+    <h1></h1>
+  </div>
+  <div class="item_c" style="margin: 0 30px;">
+    <div class="txt_interno c_1">
+      <h1>Inicio</h1>
+      <div class="item_c">
+        <div class='instruccion_interna'><span class='indica_instclic'></span>Pulsa los botones para conocer cada uno de los casos.</div>
+      </div>
+    </div>
+    <div class="txt_interno c_1">
+      <h1>Resolución 58101 de 2020</h1>
+      <div class="item_c">
+        <div class="txt_c">
+          <div class="cont_audio">
+            <div class="audio_c">
+              <audio controls style="margin-top: 15px;">
+                <source src="sounds/ajuste_diap26a.mp3" type="audio/mpeg">
+                Your browser does not support the audio tag. </audio>
+            </div>
+            <div class="subs_audio">
+              <div>A continuación se indican los principales datos de la sanción contenida en la Resolución 58101 de 2020:</div>
+            </div>
+          </div>
+          <div class="instruccion_interna">Pasa el mouse sobre los textos resaltados</div>
+          <table style="text-align: center; margin: auto;">
+            <tr>
+              <td><div class="negrilla_sensible" id="zona_sensible33">Sancionado </div></td>
+              <td><div class="negrilla_sensible" id="zona_sensible34">Fecha </div></td>
+            </tr>
+            <tr>
+              <td><div class="negrilla_sensible" id="zona_sensible35">Causa </div></td>
+              <td><div class="negrilla_sensible" id="zona_sensible36">Valor </div></td>
+            </tr>
+          </table>
+        </div>
+      </div>
+    </div>
+    <div class="txt_interno c_1">
+      <h1>Resolución 82622 de 2021</h1>
+      <div class="item_c">
+        <div class="txt_c">
+          <div class="cont_audio">
+            <div class="audio_c">
+              <audio controls style="margin-top: 15px;">
+                <source src="sounds/ajuste_diap27a.mp3" type="audio/mpeg">
+                Your browser does not support the audio tag. </audio>
+            </div>
+            <div class="subs_audio">
+              <div>A continuación se indican los principales datos de la sanción contenida en la Resolución 82622 de 2021:</div>
+            </div>
+          </div>
+          <div class="instruccion_interna">Pasa el mouse sobre los textos resaltados</div>
+          <table style="text-align: center; margin: auto;">
+            <tr>
+              <td><div class="negrilla_sensible" id="zona_sensible37">Sancionado </div></td>
+              <td><div class="negrilla_sensible" id="zona_sensible38">Fecha </div></td>
+            </tr>
+            <tr>
+              <td><div class="negrilla_sensible" id="zona_sensible39">Causa </div></td>
+              <td><div class="negrilla_sensible" id="zona_sensible40">Valor </div></td>
+            </tr>
+          </table>
+        </div>
+      </div>
+    </div>
+    <div class="txt_interno c_1">
+      <h1>Resolución 80305 de 2021</h1>
+      <div class="item_c">
+        <div class="txt_c">
+          <div class="cont_audio">
+            <div class="audio_c">
+              <audio controls style="margin-top: 15px;">
+                <source src="sounds/ajuste_diap28a.mp3" type="audio/mpeg">
+                Your browser does not support the audio tag. </audio>
+            </div>
+            <div class="subs_audio">
+              <div>A continuación se indican los principales datos de la sanción contenida en la Resolución 80305 de 2021:</div>
+            </div>
+          </div>
+          <div class="instruccion_interna">Pasa el mouse sobre los textos resaltados</div>
+          <table style="text-align: center; margin: auto;">
+            <tr>
+              <td><div class="negrilla_sensible" id="zona_sensible41">Sancionado </div></td>
+              <td><div class="negrilla_sensible" id="zona_sensible42">Fecha </div></td>
+            </tr>
+            <tr>
+              <td><div class="negrilla_sensible" id="zona_sensible43">Causa </div></td>
+              <td><div class="negrilla_sensible" id="zona_sensible44">Valor </div></td>
+            </tr>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="c_principal c_1-1">
+  <h1  data-posabsbtn="700,220">Actividad</h1>
+  <div class="item_c">
+    <div class="txt_c">
+      <table style="text-align: center; margin: auto; width: 800px;">
+        <td><div class="cont_audio">
+              <div class="audio_c">
+                <audio controls style="margin-top: 15px;">
+                  <source src="sounds/diap30.mp3" type="audio/mpeg">
+                  Your browser does not support the audio tag. </audio>
+              </div>
+              <div class="subs_audio">
+                <div>Llegó el momento de enfrentar a Gerard y liberar a Alonso. <br>
+                  <br>
+                  ¡Tus conocimientos lo harán posible! </div>
+                <div>Pulsa el botón "Ir a las preguntas" para resolver algunas actividades. </div>
+              </div>
+            </div></td>
+          <td style="width: 240px;"><img src="images/diap30.png" height="300"></td>
+      </table>
+    </div>
+  </div>
+  <div class="item_c">
+    <div class="boton_siguiente">
+      <div id="txt_btnsig2">IR A LAS PREGUNTAS </div>
+    </div>
+  </div>
+</div>
+<div id="pop0" class="pop">
+  <div class="cont_audio">
+    <div class="audio_c">
+      <audio controls style="margin-top: 15px;">
+        <source src="sounds/diap8b.mp3" type="audio/mpeg">
+        Your browser does not support the audio tag. </audio>
+    </div>
+    <div class="subs_audio"></div>
+  </div>
+  Es aquella persona natural dueña de los datos personales. </div>
+<div id="pop1" class="pop">
+  <div class="cont_audio">
+    <div class="audio_c">
+      <audio controls style="margin-top: 15px;">
+        <source src="sounds/diap8c.mp3" type="audio/mpeg">
+        Your browser does not support the audio tag. </audio>
+    </div>
+    <div class="subs_audio"></div>
+  </div>
+  Es una empresa pública o privada u otra persona que recoge los datos del Titular y toma decisiones sobre las bases de datos. </div>
+<div id="pop2" class="pop">
+  <div class="cont_audio">
+    <div class="audio_c">
+      <audio controls style="margin-top: 15px;">
+        <source src="sounds/diap8d.mp3" type="audio/mpeg">
+        Your browser does not support the audio tag. </audio>
+    </div>
+    <div class="subs_audio"></div>
+  </div>
+  Es una empresa pública o privada o una tercera persona que realiza el tratamiento de los datos por cuenta del Responsable. </div>
+<div id="pop3" class="pop">
+  <div class="cont_audio">
+    <div class="audio_c">
+      <audio controls style="margin-top: 15px;">
+        <source src="sounds/diap11b.mp3" type="audio/mpeg">
+        Your browser does not support the audio tag. </audio>
+    </div>
+    <div class="subs_audio"></div>
+  </div>
+  Son ejemplos de datos públicos: nombre, estado civil, número de identificación, fecha de nacimiento, lo relativo a profesión u oficio. </div>
+<div id="pop4" class="pop">
+  <div class="cont_audio">
+    <div class="audio_c">
+      <audio controls style="margin-top: 15px;">
+        <source src="sounds/diap12b.mp3" type="audio/mpeg">
+        Your browser does not support the audio tag. </audio>
+    </div>
+    <div class="subs_audio"></div>
+  </div>
+  Son ejemplos de datos semiprivados: historias crediticias, datos financieros y reporte en las centrales de riesgo. </div>
+<div id="pop5" class="pop">
+  <div class="cont_audio">
+    <div class="audio_c">
+      <audio controls style="margin-top: 15px;">
+        <source src="sounds/diap13b.mp3" type="audio/mpeg">
+        Your browser does not support the audio tag. </audio>
+    </div>
+    <div class="subs_audio"></div>
+  </div>
+  Son ejemplos de datos privados: correo electrónico, teléfono, dirección personal, datos laborales y académicos, fotografías, videos y datos sobre el estilo de vida. </div>
+<div id="pop6" class="pop">
+  <div class="cont_audio">
+    <div class="audio_c">
+      <audio controls style="margin-top: 15px;">
+        <source src="sounds/diap14b.mp3" type="audio/mpeg">
+        Your browser does not support the audio tag. </audio>
+    </div>
+    <div class="subs_audio"></div>
+  </div>
+  Son ejemplos de datos sensibles: datos ideológicos, políticos, religiosos, étnicos, sexuales y biométricos, pertenencia a sindicatos y características físicas. </div>
+<div id="pop7" class="pop">
+  <div class="cont_audio">
+    <div class="audio_c">
+      <audio controls style="margin-top: 15px;">
+        <source src="sounds/diap16b.mp3" type="audio/mpeg">
+        Your browser does not support the audio tag. </audio>
+    </div>
+    <div class="subs_audio"></div>
+  </div>
+  En esta se debe consignar detalladamente los tratamientos y las finalidades a los que serán sometidos los datos personales. </div>
+<div id="pop8" class="pop">
+  <div class="cont_audio">
+    <div class="audio_c">
+      <audio controls style="margin-top: 15px;">
+        <source src="sounds/diap16c.mp3" type="audio/mpeg">
+        Your browser does not support the audio tag. </audio>
+    </div>
+    <div class="subs_audio"></div>
+  </div>
+  Debe tener plenamente identificado al Responsable de los datos, informar los derechos de los Titulares y los deberes que el Responsable contrae por realizar el tratamiento. </div>
+<div id="pop9" class="pop">
+  <div class="cont_audio">
+    <div class="audio_c">
+      <audio controls style="margin-top: 15px;">
+        <source src="sounds/diap16d.mp3" type="audio/mpeg">
+        Your browser does not support the audio tag. </audio>
+    </div>
+    <div class="subs_audio"></div>
+  </div>
+  La recolección de datos se debe limitar a aquellos datos personales que son pertinentes y adecuados para la finalidad para la cual son obtenidos. </div>
+<div id="pop10" class="pop">
+  <div class="cont_audio">
+    <div class="audio_c">
+      <audio controls style="margin-top: 15px;">
+        <source src="sounds/diap18b.mp3" type="audio/mpeg">
+        Your browser does not support the audio tag. </audio>
+    </div>
+    <div class="subs_audio"></div>
+  </div>
+  <span class="negrilla">Conocer, actualizar y rectificar</span> sus datos personales frente al Responsable o Encargado. </div>
+<div id="pop11" class="pop">
+  <div class="cont_audio">
+    <div class="audio_c">
+      <audio controls style="margin-top: 15px;">
+        <source src="sounds/diap18c.mp3" type="audio/mpeg">
+        Your browser does not support the audio tag. </audio>
+    </div>
+    <div class="subs_audio"></div>
+  </div>
+  <span class="negrilla">Solicitar prueba de la autorización</span> otorgada al Responsable o Encargado. </div>
+<div id="pop12" class="pop">
+  <div class="cont_audio">
+    <div class="audio_c">
+      <audio controls style="margin-top: 15px;">
+        <source src="sounds/diap18d.mp3" type="audio/mpeg">
+        Your browser does not support the audio tag. </audio>
+    </div>
+    <div class="subs_audio"></div>
+  </div>
+  <span class="negrilla">Revocar la autorización y/o solicitar la supresión del dato</span> cuando no se respeten los principios y sus derechos. </div>
+<div id="pop13" class="pop">
+  <div class="cont_audio">
+    <div class="audio_c">
+      <audio controls style="margin-top: 15px;">
+        <source src="sounds/diap18e.mp3" type="audio/mpeg">
+        Your browser does not support the audio tag. </audio>
+    </div>
+    <div class="subs_audio"></div>
+  </div>
+  <span class="negrilla">Acceder de forma gratuita</span> a los datos que hayan sido objeto de tratamiento. </div>
+<div id="pop14" class="pop">
+  <div class="cont_audio">
+    <div class="audio_c">
+      <audio controls style="margin-top: 15px;">
+        <source src="sounds/diap18f.mp3" type="audio/mpeg">
+        Your browser does not support the audio tag. </audio>
+    </div>
+    <div class="subs_audio"></div>
+  </div>
+  <span class="negrilla">Ser informado </span>por el Responsable o Encargado, previa solicitud, respecto al uso que se les ha dado a sus datos personales. </div>
+<div id="pop15" class="pop">
+  <div class="cont_audio">
+    <div class="audio_c">
+      <audio controls style="margin-top: 15px;">
+        <source src="sounds/diap18g.mp3" type="audio/mpeg">
+        Your browser does not support the audio tag. </audio>
+    </div>
+    <div class="subs_audio"></div>
+  </div>
+  <span class="negrilla">Presentar quejas y reclamos ante la SIC </span>por infracciones a lo dispuesto en las normas, una vez haya agotado el requisito de procedibilidad. </div>
+<div id="pop16" class="pop">
+  <div class="cont_audio">
+    <div class="audio_c">
+      <audio controls style="margin-top: 15px;">
+        <source src="sounds/diap20b.mp3" type="audio/mpeg">
+        Your browser does not support the audio tag. </audio>
+    </div>
+    <div class="subs_audio"></div>
+  </div>
+  <span class="negrilla">Informar y garantizar los derechos</span> de los Titulares de los datos personales. </div>
+<div id="pop17" class="pop">
+  <div class="cont_audio">
+    <div class="audio_c">
+      <audio controls style="margin-top: 15px;">
+        <source src="sounds/diap20c.mp3" type="audio/mpeg">
+        Your browser does not support the audio tag. </audio>
+    </div>
+    <div class="subs_audio"></div>
+  </div>
+  <span class="negrilla">Solicitar y conservar copia</span> de la respectiva autorización otorgada por el Titular. </div>
+<div id="pop18" class="pop">
+  <div class="cont_audio">
+    <div class="audio_c">
+      <audio controls style="margin-top: 15px;">
+        <source src="sounds/diap20d.mp3" type="audio/mpeg">
+        Your browser does not support the audio tag. </audio>
+    </div>
+    <div class="subs_audio"></div>
+  </div>
+  Informar debidamente al Titular <span class="negrilla">sobre la finalidad </span>de la recolección de los datos personales. </div>
+<div id="pop19" class="pop">
+  <div class="cont_audio">
+    <div class="audio_c">
+      <audio controls style="margin-top: 15px;">
+        <source src="sounds/diap20e.mp3" type="audio/mpeg">
+        Your browser does not support the audio tag. </audio>
+    </div>
+    <div class="subs_audio"></div>
+  </div>
+  Conservar la información bajo las condiciones de seguridad necesarias para <span class="negrilla">impedir su adulteración, pérdida, consulta, uso o acceso no autorizado o fraudulento.</span> </div>
+<div id="pop20" class="pop">
+  <div class="cont_audio">
+    <div class="audio_c">
+      <audio controls style="margin-top: 15px;">
+        <source src="sounds/diap20f.mp3" type="audio/mpeg">
+        Your browser does not support the audio tag. </audio>
+    </div>
+    <div class="subs_audio"></div>
+  </div>
+  <span class="negrilla">Tramitar las consultas, solicitudes y reclamos</span> en los términos señalados en la ley. </div>
+<div id="pop21" class="pop">
+  <div class="cont_audio">
+    <div class="audio_c">
+      <audio controls style="margin-top: 15px;">
+        <source src="sounds/diap20g.mp3" type="audio/mpeg">
+        Your browser does not support the audio tag. </audio>
+    </div>
+    <div class="subs_audio"></div>
+  </div>
+  <span class="negrilla">Actualizar la información </span>y adoptar las demás medidas necesarias para que la información suministrada se mantenga actualizada. </div>
+<div id="pop22" class="pop">
+  <div class="cont_audio">
+    <div class="audio_c">
+      <audio controls style="margin-top: 15px;">
+        <source src="sounds/diap20h.mp3" type="audio/mpeg">
+        Your browser does not support the audio tag. </audio>
+    </div>
+    <div class="subs_audio"></div>
+  </div>
+  Garantizar la privacidad de los datos de clientes, utilizando expresamente la <span class="negrilla">información mínima necesaria</span> en la ejecución de los procesos. </div>
+<div id="pop23" class="pop">
+  <div class="cont_audio">
+    <div class="audio_c">
+      <audio controls style="margin-top: 15px;">
+        <source src="sounds/diap22b.mp3" type="audio/mpeg">
+        Your browser does not support the audio tag. </audio>
+    </div>
+    <div class="subs_audio"></div>
+  </div>
+  <span class="negrilla">Guardar la confidencialidad</span> respecto a cualquier tipo de información de carácter personal conocida en función del trabajo desarrollado, incluso una vez concluida la relación laboral con Banco Popular. </div>
+<div id="pop24" class="pop">
+  <div class="cont_audio">
+    <div class="audio_c">
+      <audio controls style="margin-top: 15px;">
+        <source src="sounds/diap22c.mp3" type="audio/mpeg">
+        Your browser does not support the audio tag. </audio>
+    </div>
+    <div class="subs_audio"></div>
+  </div>
+  <span class="negrilla">Guardar todos los soportes físicos y/o documentos</span> que contengan información con datos de carácter personal en un lugar seguro, cuando estos no sean usados, particularmente fuera de la jornada laboral. </div>
+<div id="pop25" class="pop">
+  <div class="cont_audio">
+    <div class="audio_c">
+      <audio controls style="margin-top: 15px;">
+        <source src="sounds/diap22d.mp3" type="audio/mpeg">
+        Your browser does not support the audio tag. </audio>
+    </div>
+    <div class="subs_audio"></div>
+  </div>
+  Los <span class="negrilla">permisos de acceso</span> de los usuarios son concedidos por el área encargada de tecnología de acuerdo con perfiles establecidos por cargo. </div>
+<div id="pop26" class="pop">
+  <div class="cont_audio">
+    <div class="audio_c">
+      <audio controls style="margin-top: 15px;">
+        <source src="sounds/diap22e.mp3" type="audio/mpeg">
+        Your browser does not support the audio tag. </audio>
+    </div>
+    <div class="subs_audio"></div>
+  </div>
+  <span class="negrilla">Comunicar a la Gerencia de Privacidad, Ciberseguridad y Seguridad de la Información</span>, las incidencias de seguridad de las que tenga conocimiento y que puedan afectar a bases de datos, soportes o documentos que contengan información personal. </div>
+<div id="pop27" class="pop">
+  <div class="cont_audio">
+    <div class="audio_c">
+      <audio controls style="margin-top: 15px;">
+        <source src="sounds/diap22f.mp3" type="audio/mpeg">
+        Your browser does not support the audio tag. </audio>
+    </div>
+    <div class="subs_audio"></div>
+  </div>
+  <span class="negrilla">Tramitar las consultas, solicitudes y reclamos </span>por datos personales de los Titulares en los términos señalados en la ley. Para las consultas gestionar antes de 10 días hábiles y los reclamos hasta 15 días hábiles. </div>
+<div id="pop28" class="pop">
+  <div class="cont_audio">
+    <div class="audio_c">
+      <audio controls style="margin-top: 15px;">
+        <source src="sounds/diap22g.mp3" type="audio/mpeg">
+        Your browser does not support the audio tag. </audio>
+    </div>
+    <div class="subs_audio"></div>
+  </div>
+  Recuerda consultar nuestra Política de Privacidad y Protección de Datos en:<br>
+  <br>
+  <span class="negrilla"> Intranet Enlace -> Biblioteca Virtual -> Portal de Procesos -> Procesos de Nivel 1 -> Buscar -> Privacidad</span> </div>
+<div id="pop29" class="pop">
+  <div class="cont_audio">
+    <div class="audio_c">
+      <audio controls style="margin-top: 15px;">
+        <source src="sounds/diap24b.mp3" type="audio/mpeg">
+        Your browser does not support the audio tag. </audio>
+    </div>
+    <div class="subs_audio"></div>
+  </div>
+  <span class="negrilla"> Multas de carácter personal e institucional</span> hasta por el equivalente de dos mil Salarios Mínimos Mensuales Legales Vigentes al momento de la imposición de la sanción. <br>
+  Las multas podrán ser sucesivas mientras subsista el incumplimiento que las originó. </div>
+<div id="pop30" class="pop">
+  <div class="cont_audio">
+    <div class="audio_c">
+      <audio controls style="margin-top: 15px;">
+        <source src="sounds/diap24c.mp3" type="audio/mpeg">
+        Your browser does not support the audio tag. </audio>
+    </div>
+    <div class="subs_audio"></div>
+  </div>
+  <span class="negrilla"> Suspensión </span>de las actividades relacionadas con el tratamiento de datos hasta por un término de <span class="negrilla">seis meses. </span><br>
+  En el acto de suspensión se indicarán los correctivos que se deberán adoptar. </div>
+<div id="pop31" class="pop">
+  <div class="cont_audio">
+    <div class="audio_c">
+      <audio controls style="margin-top: 15px;">
+        <source src="sounds/diap24d.mp3" type="audio/mpeg">
+        Your browser does not support the audio tag. </audio>
+    </div>
+    <div class="subs_audio"></div>
+  </div>
+  <span class="negrilla">Cierre temporal </span>de las operaciones relacionadas con el tratamiento de datos una vez transcurrido el término de suspensión sin que se hubieren adoptado los correctivos ordenados por la Superintendencia de Industria y Comercio. </div>
+<div id="pop32" class="pop">
+  <div class="cont_audio">
+    <div class="audio_c">
+      <audio controls style="margin-top: 15px;">
+        <source src="sounds/diap24e.mp3" type="audio/mpeg">
+        Your browser does not support the audio tag. </audio>
+    </div>
+    <div class="subs_audio"></div>
+  </div>
+  <span class="negrilla">Cierre inmediato y definitivo</span> de la operación que involucre el tratamiento de datos sensibles. </div>
+<div id="pop33" class="pop">
+  <div class="cont_audio">
+    <div class="audio_c">
+      <audio controls style="margin-top: 15px;">
+        <source src="sounds/ajuste_diap26b.mp3" type="audio/mpeg">
+        Your browser does not support the audio tag. </audio>
+    </div>
+    <div class="subs_audio"></div>
+  </div>
+  Banco Popular S.A. </div>
+<div id="pop34" class="pop">
+  <div class="cont_audio">
+    <div class="audio_c">
+      <audio controls style="margin-top: 15px;">
+        <source src="sounds/ajuste_diap26c.mp3" type="audio/mpeg">
+        Your browser does not support the audio tag. </audio>
+    </div>
+    <div class="subs_audio"></div>
+  </div>
+  22 de septiembre de 2020 </div>
+<div id="pop35" class="pop">
+  <div class="cont_audio">
+    <div class="audio_c">
+      <audio controls style="margin-top: 15px;">
+        <source src="sounds/ajuste_diap26d.mp3" type="audio/mpeg">
+        Your browser does not support the audio tag. </audio>
+    </div>
+    <div class="subs_audio"></div>
+  </div>
+  <div>Vencimiento del término otorgado por la Superintendencia de Industria y Comercio para que el Banco Popular rindiera explicaciones por la denuncia de un Titular que solicitó que el Banco no le continuara enviando información de carácter publicitario.</div>
+  <table class="lista_vinetas">
+    <tr>
+      <td class="vineta"></td>
+      <td> No suprimir al Titular de los datos personales y hacerle envío de publicidad y mensajes comerciales a través de SMS. </td>
+    </tr>
+    <tr>
+      <td class="vineta"></td>
+      <td> No atender dentro del tiempo legal establecido el reclamo presentado por el Titular. </td>
+    </tr>
+  </table>
+</div>
+<div id="pop36" class="pop">
+  <div class="cont_audio">
+    <div class="audio_c">
+      <audio controls style="margin-top: 15px;">
+        <source src="sounds/ajuste_diap26e.mp3" type="audio/mpeg">
+        Your browser does not support the audio tag. </audio>
+    </div>
+    <div class="subs_audio"></div>
+  </div>
+  <div>$269.046.492 </div>
+</div>
+<div id="pop37" class="pop">
+  <div class="cont_audio">
+    <div class="audio_c">
+      <audio controls style="margin-top: 15px;">
+        <source src="sounds/ajuste_diap27b.mp3" type="audio/mpeg">
+        Your browser does not support the audio tag. </audio>
+    </div>
+    <div class="subs_audio"></div>
+  </div>
+  Compañía de Financiamiento Tuya S.A. </div>
+<div id="pop38" class="pop">
+  <div class="cont_audio">
+    <div class="audio_c">
+      <audio controls style="margin-top: 15px;">
+        <source src="sounds/ajuste_diap27c.mp3" type="audio/mpeg">
+        Your browser does not support the audio tag. </audio>
+    </div>
+    <div class="subs_audio"></div>
+  </div>
+  17 de diciembre de 2021 </div>
+<div id="pop39" class="pop">
+  <div class="cont_audio">
+    <div class="audio_c">
+      <audio controls style="margin-top: 15px;">
+        <source src="sounds/ajuste_diap27d.mp3" type="audio/mpeg">
+        Your browser does not support the audio tag. </audio>
+    </div>
+    <div class="subs_audio"></div>
+  </div>
+  <div>Realizar contacto no autorizado o contacto a Titulares para otras finalidades no autorizadas. <br>
+    <br>
+    Las entidades financieras en su calidad de Responsables, previamente a contactar a los Titulares relacionados por los solicitantes de créditos, como referencias personales y/o familiares, deben asegurarse de contar con el consentimiento previo e informar la finalidad del tratamiento de los datos personales. </div>
+</div>
+<div id="pop40" class="pop">
+  <div class="cont_audio">
+    <div class="audio_c">
+      <audio controls style="margin-top: 15px;">
+        <source src="sounds/ajuste_diap27e.mp3" type="audio/mpeg">
+        Your browser does not support the audio tag. </audio>
+    </div>
+    <div class="subs_audio"></div>
+  </div>
+  <div>$301.356.400</div>
+</div>
+<div id="pop41" class="pop">
+  <div class="cont_audio">
+    <div class="audio_c">
+      <audio controls style="margin-top: 15px;">
+        <source src="sounds/ajuste_diap28b.mp3" type="audio/mpeg">
+        Your browser does not support the audio tag. </audio>
+    </div>
+    <div class="subs_audio"></div>
+  </div>
+  Consulting Group Marado S.A.S </div>
+<div id="pop42" class="pop">
+  <div class="cont_audio">
+    <div class="audio_c">
+      <audio controls style="margin-top: 15px;">
+        <source src="sounds/ajuste_diap28c.mp3" type="audio/mpeg">
+        Your browser does not support the audio tag. </audio>
+    </div>
+    <div class="subs_audio"></div>
+  </div>
+  9 de Diciembre de 2021 </div>
+<div id="pop43" class="pop">
+  <div class="cont_audio">
+    <div class="audio_c">
+      <audio controls style="margin-top: 15px;">
+        <source src="sounds/ajuste_diap28d.mp3" type="audio/mpeg">
+        Your browser does not support the audio tag. </audio>
+    </div>
+    <div class="subs_audio"></div>
+  </div>
+  <div>Hacer tratamiento de los datos personales de forma indiscriminada sin contar con autorización al tomar datos publicados en internet. <br>
+    <br>
+    Aunque los datos personales de los Titulares se encuentren publicados en medios masivos como internet o periódicos, esto no significa que sean datos públicos y que se pueda hacer tratamiento de estos sin la autorización previa, expresa e informada del Titular. </div>
+</div>
+<div id="pop44" class="pop">
+  <div class="cont_audio">
+    <div class="audio_c">
+      <audio controls style="margin-top: 15px;">
+        <source src="sounds/ajuste_diap28e.mp3" type="audio/mpeg">
+        Your browser does not support the audio tag. </audio>
+    </div>
+    <div class="subs_audio"></div>
+  </div>
+  <div>$6.390.208 </div>
+</div>
+</body>
+</html>
